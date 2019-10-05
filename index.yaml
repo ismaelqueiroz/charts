@@ -1,0 +1,22 @@
+apiVersion: v1
+entries:
+  mosquitto:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-10-05T18:57:56.279416683-03:00
+    description: An open source MQTT broker
+    digest: 23957f46c13d701b6f4f90ea1ab72045a9f345a2941052b950fc17cee4d1c6e5    
+    name: mosquitto
+    keywords:
+    - mosquitto
+    - websocket
+    - mqtt
+    - iot
+    maintainers:
+    - name: ismaelqueiroz
+    sources:
+    - https://github.com/ismaelqueiroz/charts
+    urls:
+    - https://ismaelqueiroz.github.io/charts/mosquitto-0.1.0.tgz
+    version: 0.1.0
+generated: 2019-10-05T18:57:56.279108136-03:00
