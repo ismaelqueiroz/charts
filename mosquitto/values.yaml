@@ -1,0 +1,55 @@
+# Default values for mosquitto.
+replicaCount: 1
+
+image:
+  repository: eclipse-mosquitto
+  tag: latest
+  pullPolicy: IfNotPresent
+
+fullnameOverride: ""
+nameOverride: ""
+
+service:
+  ports:
+    - name: mqtt
+      type: ClusterIP
+      port: 1883
+    - name: webscoket
+      type: ClusterIP
+      port: 9001
+
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host:
+      paths: []
+  tls: []
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 2Gi
+  storageClass: standard
+
+config: |-
+  log_dest stdout
+  listener 1883
+  listener 9090
+  protocol websockets
