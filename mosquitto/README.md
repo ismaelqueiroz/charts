@@ -1,6 +1,6 @@
 # Mosquitto
 
-[Mosquitto](https://mosquitto.org) is an open source message broker that implements the MQTT (MQ Telemetry Transport) protocol v3.1
+[Eclipse Mosquitto](https://mosquitto.org) is an open source message broker that implements the MQTT (MQ Telemetry Transport) protocol v3.1
 
 
 ## TL;DR;
@@ -97,4 +97,4 @@ helm install --name mosquitto -f mosquitto-values.yaml queiroz/mosquitto
 
 The [mosquitto](https://hub.docker.com/_/eclipse-mosquitto) image stores the mosquitto data at the `/mosquitto/data` path of the container.
 
-The chart mounts a [Persistent Volume](kubernetes.io/docs/user-guide/persistent-volumes/) volume at this location. The volume is created using dynamic volume provisioning.
+The chart mounts a [Persistent Volume](https://kubernetes.io/docs/user-guide/persistent-volumes/) volume at this location. The volume is created using dynamic volume provisioning.

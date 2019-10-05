@@ -7,4 +7,4 @@ $ helm repo add queiroz https://charts.queiroz.dev
 $ helm install queiroz/mosquitto
 ```
 
-- [Mosquitto](https://github.com/ismaelqueiroz/charts/tree/master/mosquitto)
+- [Eclipse Mosquitto](https://github.com/ismaelqueiroz/charts/tree/master/mosquitto)
