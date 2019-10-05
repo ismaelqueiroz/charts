@@ -17,6 +17,6 @@ entries:
     sources:
     - https://github.com/ismaelqueiroz/charts
     urls:
-    - https://ismaelqueiroz.github.io/charts/mosquitto-0.1.0.tgz
+    - http://charts.queiroz.dev/mosquitto-0.1.0.tgz
     version: 0.1.0
 generated: 2019-10-05T18:57:56.279108136-03:00
