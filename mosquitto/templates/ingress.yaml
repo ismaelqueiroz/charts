@@ -1,39 +1,27 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "mosquitto.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ template "zalenium.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "mosquitto.name" . }}
-    helm.sh/chart: {{ include "mosquitto.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-  {{- with .Values.ingress.annotations }}
+    {{- include "zalenium.labels" . | nindent 4 }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
-{{- if .Values.ingress.tls }}
+  {{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
     - hosts:
-      {{- range .hosts }}
-        - {{ . | quote }}
-      {{- end }}
-      secretName: {{ .secretName }}
+      - {{ .Values.ingress.hostname | quote }}
+      secretName: {{ .Values.ingress.secretName }}
   {{- end }}
-{{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
-      http:
-        paths:
-        {{- range .paths }}
-          - path: {{ . }}
-            backend:
-              serviceName: {{ $fullName }}
-              servicePort: mqtt
+  - host: {{ .Values.ingress.hostname }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "zalenium.fullname" . }}
+          servicePort: {{ .Values.hub.svcPort }}
+        {{- if .Values.ingress.path }}
+        path: {{ .Values.ingress.path }}
         {{- end }}
-  {{- end }}
-{{- end }}
+{{- end -}}

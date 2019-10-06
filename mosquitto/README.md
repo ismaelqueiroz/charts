@@ -24,16 +24,14 @@ This chart bootstraps a [mosquitto](https://hub.docker.com/_/eclipse-mosquitto) 
 To install the chart with the release name `mosquitto`:
 
 ```bash
-$ helm install --name mosquitto queiroz/mosquitto
-
-$ helm install --name=mosquitto queiroz/mosquitto \
+helm install --name=mosquitto queiroz/mosquitto \
     --namespace=broker \
     --set persistence.enabled=true \
     --set persistence.storageClass=longhorn \
     --set ingress.enabled=true \
     --set ingress.tls=true \
-    --set ingress.tls.secretName=mosquitto-ingress-tls \
-    --set ingress.hosts[0]=mosquitto.broker.queiroz.dev \
+    --set ingress.secretName=mosquitto-ingress-tls \
+    --set ingress.hostname=mosquitto.broker.queiroz.dev \
     --set ingress.annotations."certmanager\.k8s\.io/cluster-issuer"="letsencrypt-prod" \
     --set ingress.annotations."kubernetes\.io/ingress"="nginx" \
     --set ingress.annotations."kubernetes\.io/tls-acme"="true" \
