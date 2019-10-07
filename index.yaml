@@ -3,9 +3,10 @@ entries:
   mosquitto:
   - apiVersion: v1
     appVersion: 1.6.7
-    created: 2019-10-05T19:57:12.018850411-03:00
+    created: 2019-10-06T22:20:25.451062078-03:00
     description: An open source MQTT broker
-    digest: 04ba13512d2de59727bb26112aa1a576ddcbbb2e1ed8c483e2e9f9cad7b23863
+    digest: 7628a79cd03ea2f2e80b12bacb7ffdd55beca6ca1a3c6a8bebea48080f744edd
+    icon: https://mosquitto.org/images/mosquitto-text-side-28.png
     keywords:
     - mosquitto
     - websocket
@@ -19,4 +20,4 @@ entries:
     urls:
     - https://charts.queiroz.dev/mosquitto-1.6.7.tgz
     version: 1.6.7
-generated: 2019-10-05T19:57:12.018291207-03:00
+generated: 2019-10-06T22:20:25.450526082-03:00
