@@ -23,19 +23,38 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- range .Values.service.ports }}
           ports:
+          {{- range .Values.service.ports }}
             - name: {{ .name | quote }}
-              containerPort: {{ .port | quote }}
-        {{- end }}
+              containerPort: {{ .port | int }}
+          {{- end }}
           livenessProbe:
             tcpSocket:
-              port: 1883
+              port: 9001
           readinessProbe:
             tcpSocket:
-              port: 1883
+              port: 9001
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: mosquitto-conf
+              mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
+              readOnly: true
+            - name: mosquitto-data
+              mountPath: /mosquitto/data
+              subPath: mosquitto/data
+      volumes:
+        - name: mosquitto-conf
+          configMap:
+            name: {{ template "mosquitto.name" . }}
+        - name: mosquitto-data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ template "mosquitto.name" . }}
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

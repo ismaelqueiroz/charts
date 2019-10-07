@@ -3,10 +3,10 @@ kind: ConfigMap
 metadata:
     name: {{ include "mosquitto.name" . }}
     labels:
-        app: {{ include "mosquitto.name" . }}
-        chart: {{ .Chart.Name }}- {{ .Chart.Version | replace "+" "_" }}
-        release: {{ .Release.Name }}
-        heritage: {{ .Release.Service }}
+        app.kubernetes.io/name: {{ include "mosquitto.name" . }}
+        helm.sh/chart: {{ include "mosquitto.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
     mosquitto.conf: |-
 {{- if .Values.config }}

@@ -27,18 +27,14 @@ To install the chart with the release name `mosquitto`:
 helm install --name=mosquitto queiroz/mosquitto \
     --namespace=broker \
     --set persistence.enabled=true \
-    --set persistence.storageClass=longhorn \
+    --set persistence.storageClass="fast" \
     --set ingress.enabled=true \
     --set ingress.tls=true \
-    --set ingress.secretName=mosquitto-ingress-tls \
-    --set ingress.hostname=mosquitto.broker.queiroz.dev \
+    --set ingress.secretName="mosquitto-ingress-tls" \
+    --set ingress.hostname="mosquitto.broker.queiroz.dev" \
     --set ingress.annotations."certmanager\.k8s\.io/cluster-issuer"="letsencrypt-prod" \
-    --set ingress.annotations."kubernetes\.io/ingress"="nginx" \
-    --set ingress.annotations."kubernetes\.io/tls-acme"="true" \
-    --set ingress.annotations."kubernetes\.io/ingress.allow-http"="false" \
-    --set ingress.annotations."nginx\.ingress\.kubernetes\.io/proxy-connect-timeout"="30" \
-    --set ingress.annotations."nginx\.ingress\.kubernetes\.io/proxy-read-timeout"="1800" \
-    --set ingress.annotations."nginx\.ingress\.kubernetes\.io/proxy-send-timeout"="1800"
+    --set ingress.annotations."kubernetes\.io/ingress"=nginx \
+    --set ingress.annotations."kubernetes\.io/tls-acme"="true"
 ```
 
 The command deploys mosquitto on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.

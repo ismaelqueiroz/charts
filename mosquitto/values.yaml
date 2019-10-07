@@ -3,28 +3,33 @@ replicaCount: 1
 
 image:
   repository: eclipse-mosquitto
-  tag: latest
+  tag: 1.6.7
   pullPolicy: IfNotPresent
 
 fullnameOverride: ""
 nameOverride: ""
 
 service:
+  type: "ClusterIP" #NodePort
   ports:
-    - name: mqtt
-      type: ClusterIP
+    - name: "mqtt"
       port: 1883
-    - name: webscoket
-      type: ClusterIP
+    - name: "websocket"
       port: 9001
 
 ingress:
   enabled: false
   tls: false
   annotations:
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
     kubernetes.io/ingress.class: "nginx"
     kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.allow-http: "false"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
   hostname:
+  secretName:
 
 resources:
   limits:
@@ -43,11 +48,14 @@ affinity: {}
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 2Gi
-  storageClass: standard
+  size: 10Gi
+  storageClass:
 
 config: |-
   log_dest stdout
-  listener 1883
-  listener 9090
+  port 1883
+  bind_address 0.0.0.0
+  listener 9001
   protocol websockets
+  persistence true
+  persistence_location /mosquitto/data/

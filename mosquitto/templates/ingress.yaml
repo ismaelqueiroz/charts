@@ -2,11 +2,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "zalenium.fullname" . }}
+  name: {{ template "mosquitto.fullname" . }}
   labels:
-    {{- include "zalenium.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "mosquitto.name" . }}
+    helm.sh/chart: {{ include "mosquitto.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
   tls:
@@ -18,10 +23,8 @@ spec:
   - host: {{ .Values.ingress.hostname }}
     http:
       paths:
-      - backend:
-          serviceName: {{ template "zalenium.fullname" . }}
-          servicePort: {{ .Values.hub.svcPort }}
-        {{- if .Values.ingress.path }}
-        path: {{ .Values.ingress.path }}
-        {{- end }}
+      - path: /
+        backend:
+          serviceName:  {{ template "mosquitto.fullname" . }}
+          servicePort: websocket
 {{- end -}}

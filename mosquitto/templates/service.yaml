@@ -8,12 +8,13 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
+  type: {{ .Values.service.type | quote }}
   ports:
   {{- range .Values.service.ports }}
-    - port: {{ .port | quote }}
-      targetPort: {{ .name | quote }}
+    - name: {{ .name | quote }}
+      targetPort: {{ .port | int }}
       protocol: TCP
-      name: {{ .name | quote }}
+      port: {{ .port | int }}
   {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "mosquitto.name" . }}
